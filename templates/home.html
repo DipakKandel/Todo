@@ -2,10 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo</title>
+    <title>TODO LIST - Home</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+      .form-control {
+        padding: 1.375rem 0.75rem !important;
+      }
+    </style>
   </head>
   <body>
-    <h1>This is homepage</h1>
+    <div class="container">
+      <h3 class="pt-5 text-center">Django ToDo App</h3>
+      <div class="row">
+        <h4>My Day</h4>
+        <p class="text-muted">{% now "jS F Y" %}</p>
+        <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll">
+          <!-- List of all the tasks for the day -->
+          {% for task in todo %}
+          <div class="card m-1">
+            <div class="card-body">
+              {{task.task}}
+              <span style="position: relative; float: right">
+                <a class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+                <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                <a class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-md-5 col-lg-5">
+          <h5>Completed Tasks</h5>
+          <!-- List of all the tasks that have completed -->
+          {% for task in done %}
+          <div class="card m-1">
+            <div class="card-body">{{done.task}}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 p-0" style="position: absolute; bottom: 50px">
+          <!-- To Do Form -->
+          <form action="">
+            <div class="form-group">
+              <span style="display: flex">
+                <input type="text" class="form-control" placeholder="Type your task here...." />
+                <button class="btn btn-primary" style="width: 200px"><i class="fa fa-plus"></i> Add</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
