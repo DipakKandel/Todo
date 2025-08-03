@@ -7,4 +7,8 @@ urlpatterns = [
     path("archive/<int:id>/",views.archiveTask,name="archiveTask"),
     path("revert/<int:id>/",views.revertTask,name="revertTask"),
     path("edit/<int:id>/",views.editTask,name="editTask"),
+    path('guest/mark-done/<int:id>/', views.guest_mark_done, name='guest_mark_done'),
+    path('guest/delete/<int:id>/', views.guest_delete_task, name='guest_delete_task'),
+    path('guest/mark-undone/<int:id>/', views.guest_mark_undone, name='guest_mark_undone'),
+    path("clear-session/", views.clear_guest_session, name="clear_session"),
 ]
