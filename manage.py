@@ -2,11 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-import dotenv
+import dotenv  # noqa: F401
 
 
 def main():
-    dotenv.load_dotenv()
+    dotenv.read_dotenv()  # noqa: F401
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "todo_main.settings")
     try:

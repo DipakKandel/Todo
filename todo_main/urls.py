@@ -10,4 +10,5 @@ urlpatterns = [
 # Todo App
 urlpatterns += [
     path("tasks/", include("tasks.urls")),
+    path("user/", include("accounts.urls")),
 ]

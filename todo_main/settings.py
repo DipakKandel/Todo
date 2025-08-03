@@ -1,4 +1,4 @@
-
+import os
 
 from pathlib import Path
 
@@ -10,15 +10,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# TODO: Move this to environment variables for production
 SECRET_KEY = "django-insecure-&yk$$t(_v(so9-2so=*@(^q_x6=yoyqppcn)s_d7c0wia4v^4j"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["todo-ne3e.onrender.com"]
+ALLOWED_HOSTS = ["todo-ne3e.onrender.com","localhost","127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ['https://todo-ne3e.onrender.com']
 
+# for custom user model
+AUTH_USER_MODEL = 'accounts.User'
+
+# Login URL for login_required decorator
+LOGIN_URL = '/user/login/'
 
 # Application definition
 
@@ -29,7 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tasks"
+    "tasks",
+    "accounts"
 ]
 
 MIDDLEWARE = [
@@ -108,6 +115,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,13 +27,22 @@
   </head>
   <body>
     <div class="container">
-      <h3 class="pt-5 text-center">Django ToDo App</h3>
+      <h3 class="pt-5 text-center">G'Day Mate</h3>
       <div class="row">
-        <div class="full-width center" style="position: center">
-          <h4 class="text-center">My Day</h4>
-          <p class="text-muted text-center">{% now "jS F Y" %}</p>
+        <div class="col-md-9 col-lg-9" style="position: center">
+          <h4 class="text-center">Today so far</h4>
+          <p class="text-muted text-center" style="margin-bottom: 20px">{% now "jS F Y" %}</p>
         </div>
-        <br />
+        {% if request.user.is_authenticated %}
+        <div class="col-md-3 col-lg-3">
+          <p>Hello, {{ request.user.username }}</p>
+          <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        </div>
+        {% else %}
+        <div class="col-md-1 col-lg-1">
+          <a href="{% url 'login' %}" class="btn btn-danger">Login</a>
+        </div>
+        {% endif %}
         <div class="full-width center" style="position: center">
           <!-- To Do Form -->
           <form action="{% url 'addTask' %}" method="POST">
@@ -48,30 +59,38 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll">
+        <div class="col-md-6 col-lg-6" style="height: 450px; overflow: scroll">
           <!-- List of all the tasks for the day -->
           <h5>Tasks to do today</h5>
           {% if incomplete_message %}
           <div class="alert alert-info">{{ incomplete_message }}</div>
-          {% else %} {% for task in todo %}
-          <div class="card m-1">
-            <div class="card-body">
-              {{task.task}}
-              <span style="position: relative; float: right">
-                <a href="{% url 'markAsDone' task.id %}" class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+          {% else %}
+          <div class="card m-1 border border-success">
+            {% for task in todo %}
+            <div class="card m-1">
+              <div class="card-body">
+                {{task.task}}
+                <span style="position: relative; float: right">
+                  {% if request.user.is_authenticated %}
+                  <a href="{% url 'markAsDone' task.id %}" class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+                  <a href="{% url 'deleteTask' task.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                  {% else %}
+                  <a href="{% url 'guest_mark_done' task.id %}" class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+                  <a href="{% url 'guest_delete_task' task.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                  {% endif %}
 
-                <a href="{% url 'deleteTask' task.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editTask('{{ task.id }}', '{{ task.task|escapejs }}')">
-                  <i class="fa fa-pencil"></i>
-                </button>
-              </span>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editTask('{{ task.id }}', '{{ task.task|escapejs }}')" title="Edit Task">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                </span>
+              </div>
             </div>
+
+            {% endfor %} {% endif %}
           </div>
-          {% endfor %} {% endif %}
         </div>
 
-        <div class="col-md-5 col-lg-5">
+        <div class="col-md-6 col-lg-6" style="height: 450px; overflow: scroll">
           <h5>Completed Tasks</h5>
           <!-- List of all the tasks that have completed -->
           {% if complete_message %}
@@ -81,12 +100,24 @@
             <div class="card-body text-decoration-line-through">
               {{task.task}}
               <span style="position: relative; float: right">
-                <a href="{% url 'archiveTask' task.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-eye-slash-fill"></i></a>
-                <a href="{% url 'revertTask' task.id %}" class="btn btn-sm btn-outline-success"><i class="bi bi-arrow-counterclockwise"></i> </a>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'archiveTask' task.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-eye-slash-fill" title="Archive Task"></i></a>
+                <a href="{% url 'revertTask' task.id %}" class="btn btn-sm btn-outline-success"><i class="bi bi-arrow-counterclockwise" title="Revert Task to To Do"></i></a>
+                {% else %}
+                <a href="{% url 'guest_delete_task' task.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash3" title="Delete Task"></i></a>
+                <a href="{% url 'guest_mark_undone' task.id %}" class="btn btn-sm btn-outline-success"><i class="bi bi-arrow-counterclockwise" title="Mark as To Do Again"></i></a>
+                {% endif %}
               </span>
             </div>
           </div>
           {% endfor %} {% endif %}
+        </div>
+      </div>
+      <div class="row p-3 m-3">
+        <div class="col-md-12 col-lg-12" style="height: 450px; overflow: scroll">
+          Today's Summary<img src="{% static 'images/summary.png' %}" alt="Summary Icon" style="height: 20px; margin-right: 8px" />
+
+          <div class="card m-1 card-body">{{ summary }}</div>
         </div>
       </div>
     </div>
@@ -115,7 +146,7 @@
         </div>
       </div>
     </div>
-
+    <!-- minor changes -->
     <script>
       function editTask(taskId, taskText) {
         document.getElementById("editTaskInput").value = taskText;
