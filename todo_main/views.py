@@ -25,7 +25,7 @@ def home(request):
         if not incomplete_tasks.exists():
             incomplete_message = "No tasks to do today"
         if not complete_tasks.exists():
-            complete_message = "Let's do more tasks"
+            complete_message = "None !!! Lets start doings tasks one by one"
 
         # ✅ Prepare task texts for AI summary
         incomplete_list = [t.task for t in incomplete_tasks]
@@ -45,7 +45,7 @@ def home(request):
         if not incomplete_list:
                 incomplete_message = "No tasks to do today"
         if not complete_list:
-                complete_message = "Let's do more tasks"
+                complete_message = "None !!! Lets start doings tasks one by one"
 
     # ✅ Generate summary via AI
     if client:
