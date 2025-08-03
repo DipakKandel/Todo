@@ -17,6 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["todo-ne3e.onrender.com"]
 
+CSRF_TRUSTED_ORIGINS = ['https://todo-ne3e.onrender.com']
+
 
 # Application definition
 
