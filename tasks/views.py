@@ -107,6 +107,15 @@ def guest_mark_undone(request, id):
         request.session["guest_tasks"] = tasks
     return redirect("home")
 
+def guest_edit_task(request, id):
+    if request.method == "POST":
+        tasks = request.session.get("guest_tasks", [])
+        if 0 <= id < len(tasks):
+            updated_task = request.POST["oneTask"]
+            tasks[id]["task"] = updated_task
+            request.session["guest_tasks"] = tasks
+    return redirect("home")
+
 def clear_guest_session(request):
     request.session.clear()
     return redirect("home")
