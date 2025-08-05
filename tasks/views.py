@@ -16,8 +16,8 @@ def addTask(request):
     else:
         guest_tasks = request.session.get("guest_tasks", [])
 
-        # ✅ Only store as dict
-        guest_tasks.append({
+        # ✅ Add new task to the top of the list
+        guest_tasks.insert(0, {
             "task": task_text,
             "is_completed": False
         })
@@ -105,6 +105,15 @@ def guest_mark_undone(request, id):
     if 0 <= id < len(tasks):
         tasks[id]["is_completed"] = False
         request.session["guest_tasks"] = tasks
+    return redirect("home")
+
+def guest_edit_task(request, id):
+    if request.method == "POST":
+        tasks = request.session.get("guest_tasks", [])
+        if 0 <= id < len(tasks):
+            updated_task = request.POST["oneTask"]
+            tasks[id]["task"] = updated_task
+            request.session["guest_tasks"] = tasks
     return redirect("home")
 
 def clear_guest_session(request):

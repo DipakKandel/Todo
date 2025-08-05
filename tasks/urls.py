@@ -10,5 +10,6 @@ urlpatterns = [
     path('guest/mark-done/<int:id>/', views.guest_mark_done, name='guest_mark_done'),
     path('guest/delete/<int:id>/', views.guest_delete_task, name='guest_delete_task'),
     path('guest/mark-undone/<int:id>/', views.guest_mark_undone, name='guest_mark_undone'),
+    path('guest/edit/<int:id>/', views.guest_edit_task, name='guest_edit_task'),
     path("clear-session/", views.clear_guest_session, name="clear_session"),
 ]
