@@ -100,7 +100,7 @@
               <div class="d-flex align-items-center gap-2">
                 <button class="btn btn-outline-primary btn-sm" onclick="showFeatures()"><i class="fa fa-star me-1"></i>Features</button>
                 {% if request.user.is_authenticated %}
-                <span class="me-3 text-muted"> <i class="fa fa-user me-1"></i>Hello, <strong>{{ request.user.username }}</strong> </span>
+                <span class="me-3 text-muted"> <i class="fa fa-user me-1"></i>Hello, <strong>{{ request.user.name }}</strong> </span>
                 <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm"> <i class="fa fa-sign-out me-1"></i>Logout </a>
                 {% else %}
                 <a href="{% url 'login' %}" class="btn btn-primary btn-sm"> <i class="fa fa-sign-in me-1"></i>Login </a>
