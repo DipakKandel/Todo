@@ -97,14 +97,15 @@
           <div class="header-section text-center mb-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h1 class="display-4 fw-bold text-dark mb-0"><i class="fa fa-tasks text-primary"></i> Todo App</h1>
-              {% if request.user.is_authenticated %}
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showFeatures()"><i class="fa fa-star me-1"></i>Features</button>
+                {% if request.user.is_authenticated %}
                 <span class="me-3 text-muted"> <i class="fa fa-user me-1"></i>Hello, <strong>{{ request.user.username }}</strong> </span>
                 <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm"> <i class="fa fa-sign-out me-1"></i>Logout </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-sm"> <i class="fa fa-sign-in me-1"></i>Login </a>
+                {% endif %}
               </div>
-              {% else %}
-              <a href="{% url 'login' %}" class="btn btn-primary btn-sm"> <i class="fa fa-sign-in me-1"></i>Login </a>
-              {% endif %}
             </div>
 
             <div class="text-center">
@@ -239,6 +240,141 @@
       </div>
     </div>
 
+    <!-- Features Modal -->
+    <div class="modal fade" id="featuresModal" tabindex="-1" aria-labelledby="featuresModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+          <div class="modal-header bg-gradient text-white border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+            <h5 class="modal-title fw-bold" id="featuresModalLabel"><i class="fa fa-code me-2"></i>Technical Features & Skills</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row g-4">
+              <!-- Backend Development -->
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                  <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0 fw-bold"><i class="fa fa-server me-2"></i>Backend Development</h6>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Django Framework</strong> - Full-stack web development</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Custom User Model</strong> - Email-based authentication</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Database Design</strong> - SQLite with Django ORM</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Session Management</strong> - Guest user functionality</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Security</strong> - CSRF protection, login_required decorators</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Error Handling</strong> - Try-catch blocks, ObjectDoesNotExist</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Frontend Development -->
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                  <div class="card-header bg-success text-white">
+                    <h6 class="mb-0 fw-bold"><i class="fa fa-desktop me-2"></i>Frontend Development</h6>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Bootstrap 5</strong> - Responsive design framework</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>JavaScript</strong> - Dynamic interactions & AJAX</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>CSS3</strong> - Custom styling & animations</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Django Templates</strong> - Server-side rendering</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Modal Systems</strong> - Interactive task editing</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Font Awesome</strong> - Icon integration</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- API Integration -->
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                  <div class="card-header bg-info text-white">
+                    <h6 class="mb-0 fw-bold"><i class="fa fa-plug me-2"></i>API Integration</h6>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>OpenAI API</strong> - GPT-3.5 Turbo integration</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>AI Summaries</strong> - Intelligent task analysis</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Environment Variables</strong> - Secure API key management</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Error Handling</strong> - Graceful API failures</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Async Processing</strong> - Non-blocking API calls</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DevOps & Tools -->
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0 fw-bold"><i class="fa fa-cogs me-2"></i>DevOps & Tools</h6>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Git Version Control</strong> - Branch management & collaboration</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Virtual Environment</strong> - Python dependency isolation</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Requirements.txt</strong> - Package management</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Django Migrations</strong> - Database schema management</li>
+                      <li class="mb-2"><i class="fa fa-check text-success me-2"></i><strong>Code Quality</strong> - Linting & best practices</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Skills -->
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-header bg-dark text-white">
+                    <h6 class="mb-0 fw-bold"><i class="fa fa-rocket me-2"></i>Additional Skills & Features</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <h6 class="fw-bold text-primary"><i class="fa fa-shield me-2"></i>Security</h6>
+                        <ul class="list-unstyled small">
+                          <li>• Password hashing & validation</li>
+                          <li>• User authentication & authorization</li>
+                          <li>• CSRF protection</li>
+                          <li>• Secure session management</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4">
+                        <h6 class="fw-bold text-success"><i class="fa fa-users me-2"></i>User Experience</h6>
+                        <ul class="list-unstyled small">
+                          <li>• Guest & authenticated user modes</li>
+                          <li>• Responsive mobile-first design</li>
+                          <li>• Real-time task updates</li>
+                          <li>• Intuitive navigation</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4">
+                        <h6 class="fw-bold text-info"><i class="fa fa-database me-2"></i>Data Management</h6>
+                        <ul class="list-unstyled small">
+                          <li>• CRUD operations</li>
+                          <li>• Data validation & sanitization</li>
+                          <li>• Efficient database queries</li>
+                          <li>• Data persistence strategies</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0 bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="https://github.com/DipakKandel/Todo" class="btn btn-primary" target="_blank"> <i class="fa fa-github me-2"></i>View Source Code </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       function editTask(taskId, taskText) {
         // Decode HTML entities and set the value
@@ -270,6 +406,16 @@
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 200) + 'px';
       });
+
+      function showHelp() {
+        // Show the help modal
+        new bootstrap.Modal(document.getElementById('helpModal')).show();
+      }
+
+      function showFeatures() {
+        // Show the features modal
+        new bootstrap.Modal(document.getElementById('featuresModal')).show();
+      }
     </script>
   </body>
 </html>
