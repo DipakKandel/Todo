@@ -16,8 +16,8 @@ def addTask(request):
     else:
         guest_tasks = request.session.get("guest_tasks", [])
 
-        # ✅ Only store as dict
-        guest_tasks.append({
+        # ✅ Add new task to the top of the list
+        guest_tasks.insert(0, {
             "task": task_text,
             "is_completed": False
         })
